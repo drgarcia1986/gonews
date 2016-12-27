@@ -47,7 +47,10 @@ func getStoryIds(url string) ([]int, error) {
 	}
 
 	ids := []int{}
-	json.Unmarshal(body, &ids)
+	err = json.Unmarshal(body, &ids)
+	if err != nil {
+		return nil, err
+	}
 	return ids, nil
 }
 
@@ -66,7 +69,10 @@ func getStory(id int) (*Story, error) {
 	}
 
 	var story Story
-	json.Unmarshal(body, &story)
+	err = json.Unmarshal(body, &story)
+	if err != nil {
+		return nil, err
+	}
 	return &story, nil
 }
 
@@ -104,6 +110,7 @@ func (c *Client) GetStories(storyType, limit int) ([]*Story, error) {
 		}
 		storiesMap[request.id] = request.response
 	}
+	close(storyResponses)
 
 	// To keep order
 	for _, id := range targetIds {

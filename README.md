@@ -1,4 +1,6 @@
 # Gonews
+[![Build Status](https://travis-ci.org/drgarcia1986/gonews.svg)](https://travis-ci.org/drgarcia1986/gonews)
+
 A Golang CLI to browser news from [Hacker News](https://news.ycombinator.com/)
 Also is a Golang implementation of the awesome [pynews-cli](https://github.com/mazulo/pynews_cli).
 
