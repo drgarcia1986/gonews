@@ -47,8 +47,7 @@ func getStoryIds(url string) ([]int, error) {
 	}
 
 	ids := []int{}
-	err = json.Unmarshal(body, &ids)
-	if err != nil {
+	if err = json.Unmarshal(body, &ids); err != nil {
 		return nil, err
 	}
 	return ids, nil
@@ -69,8 +68,8 @@ func getStory(id int) (*Story, error) {
 	}
 
 	var story Story
-	err = json.Unmarshal(body, &story)
-	if err != nil {
+
+	if err = json.Unmarshal(body, &story); err != nil {
 		return nil, err
 	}
 	return &story, nil
