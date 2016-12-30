@@ -8,10 +8,10 @@ import (
 )
 
 func TestGetStoryUrl(t *testing.T) {
-	expectedUrl := fmt.Sprintf("%s/1.json", urlStoryBase)
+	expectedURL := fmt.Sprintf("%s/1.json", urlStoryBase)
 
-	if url := getStoryUrl(1); url != expectedUrl {
-		t.Errorf("Expected %s, got %s", expectedUrl, url)
+	if url := getStoryURL(1); url != expectedURL {
+		t.Errorf("Expected %s, got %s", expectedURL, url)
 	}
 }
 
@@ -39,7 +39,7 @@ func TestGetStory(t *testing.T) {
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
 
-	url := getStoryUrl(1)
+	url := getStoryURL(1)
 	httpmock.RegisterResponder("GET", url,
 		httpmock.NewStringResponder(200,
 			`{
@@ -55,21 +55,21 @@ func TestGetStory(t *testing.T) {
 	}
 
 	expectedTitle := "test"
-	expectedUrl := "http://test.com"
+	expectedURL := "http://test.com"
 	if story.Title != expectedTitle {
 		t.Errorf("Expected %s, got %s", expectedTitle, story.Title)
 	}
-	if story.Url != expectedUrl {
-		t.Errorf("Expected %s, got %s", expectedUrl, story.Url)
+	if story.URL != expectedURL {
+		t.Errorf("Expected %s, got %s", expectedURL, story.URL)
 	}
 }
 
 func TestGetUrl(t *testing.T) {
-	if url := getUrl(NewStories); url != urlNewStories {
+	if url := getURL(NewStories); url != urlNewStories {
 		t.Errorf("Expected %s, got %s", urlNewStories, url)
 	}
 
-	if url := getUrl(TopStories); url != urlTopStories {
+	if url := getURL(TopStories); url != urlTopStories {
 		t.Errorf("Expected %s, got %s", urlTopStories, url)
 	}
 }
@@ -81,7 +81,7 @@ func TestGetStories(t *testing.T) {
 	httpmock.RegisterResponder("GET", urlTopStories,
 		httpmock.NewStringResponder(200, "[1, 2, 3]"),
 	)
-	url := getStoryUrl(1)
+	url := getStoryURL(1)
 	httpmock.RegisterResponder("GET", url,
 		httpmock.NewStringResponder(200,
 			`{
@@ -90,7 +90,7 @@ func TestGetStories(t *testing.T) {
 				"type": "story", "url": "http://test.com"
 			}`),
 	)
-	url = getStoryUrl(2)
+	url = getStoryURL(2)
 	httpmock.RegisterResponder("GET", url,
 		httpmock.NewStringResponder(200,
 			`{

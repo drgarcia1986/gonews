@@ -10,7 +10,7 @@ import (
 type Client struct{}
 type Story struct {
 	Title string `json:"title"`
-	Url   string `json:"url"`
+	URL   string `json:"url"`
 }
 type storyRequest struct {
 	id       int
@@ -30,7 +30,7 @@ var (
 	urlStoryBase  = fmt.Sprintf("%s/item", urlBase)
 )
 
-func getStoryUrl(id int) string {
+func getStoryURL(id int) string {
 	return fmt.Sprintf("%s/%d.json", urlStoryBase, id)
 }
 
@@ -54,7 +54,7 @@ func getStoryIds(url string) ([]int, error) {
 }
 
 func getStory(id int) (*Story, error) {
-	url := getStoryUrl(id)
+	url := getStoryURL(id)
 
 	resp, err := http.Get(url)
 	if err != nil {
@@ -75,7 +75,7 @@ func getStory(id int) (*Story, error) {
 	return &story, nil
 }
 
-func getUrl(storyType int) string {
+func getURL(storyType int) string {
 	switch storyType {
 	case TopStories:
 		return urlTopStories
@@ -107,7 +107,7 @@ func storiesGenerator(targetIds []int) chan chan *storyRequest {
 
 func (c *Client) GetStories(storyType, limit int) ([]*Story, error) {
 	stories := []*Story{}
-	url := getUrl(storyType)
+	url := getURL(storyType)
 	ids, err := getStoryIds(url)
 	if err != nil {
 		return nil, err

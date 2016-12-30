@@ -21,7 +21,7 @@ func (gui *Gui) getLine(g *gocui.Gui, v *gocui.View) error {
 
 	for _, story := range gui.items {
 		if story.Title == line {
-			return utils.OpenUrl(story.Url)
+			return utils.OpenURL(story.URL)
 		}
 	}
 	return nil

@@ -5,7 +5,7 @@ import (
 	"runtime"
 )
 
-func OpenUrl(url string) error {
+func OpenURL(url string) error {
 	var cmd string
 	switch runtime.GOOS {
 	case "darwin":
