@@ -84,32 +84,44 @@ func getUrl(storyType int) string {
 	}
 }
 
+func storiesGenerator(targetIds []int) chan chan *storyRequest {
+	generator := make(chan chan *storyRequest, len(targetIds))
+
+	go func() {
+		for _, id := range targetIds {
+			generator <- func(id int) chan *storyRequest {
+				future := make(chan *storyRequest, 1)
+				go func() {
+					story, err := getStory(id)
+					future <- &storyRequest{id, story, err}
+					close(future)
+				}()
+				return future
+			}(id)
+		}
+		close(generator)
+	}()
+
+	return generator
+}
+
 func (c *Client) GetStories(storyType, limit int) ([]*Story, error) {
 	stories := []*Story{}
 	url := getUrl(storyType)
 	ids, err := getStoryIds(url)
-	targetIds := ids[:limit]
 	if err != nil {
 		return nil, err
 	}
-
-	storyResponses := make(chan *storyRequest, limit)
-	for _, id := range targetIds {
-		go func(id int) {
-			story, err := getStory(id)
-			storyResponses <- &storyRequest{id, story, err}
-		}(id)
-	}
+	targetIds := ids[:limit]
 
 	storiesMap := make(map[int]*Story)
-	for i := 0; i < limit; i++ {
-		request := <-storyResponses
+	for future := range storiesGenerator(targetIds) {
+		request := <-future
 		if request.err != nil {
 			return nil, err
 		}
 		storiesMap[request.id] = request.response
 	}
-	close(storyResponses)
 
 	// To keep order
 	for _, id := range targetIds {
