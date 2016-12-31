@@ -28,7 +28,7 @@ Usage of gonews:
   -limit int
         Number of Stories to get (default 10)
   -type string
-        Stories Type ('new' or 'top') (default "new")
+        Stories Type ('new' or 'top') (default "top")
 ```
 
 ## Observation
