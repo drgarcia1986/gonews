@@ -13,9 +13,9 @@ type Story struct {
 	URL   string `json:"url"`
 }
 type storyRequest struct {
-	id       int
-	response *Story
-	err      error
+	id    int
+	story *Story
+	err   error
 }
 
 const (
@@ -114,18 +114,12 @@ func (c *Client) GetStories(storyType, limit int) ([]*Story, error) {
 	}
 	targetIds := ids[:limit]
 
-	storiesMap := make(map[int]*Story)
 	for future := range storiesGenerator(targetIds) {
 		request := <-future
 		if request.err != nil {
 			return nil, err
 		}
-		storiesMap[request.id] = request.response
-	}
-
-	// To keep order
-	for _, id := range targetIds {
-		stories = append(stories, storiesMap[id])
+		stories = append(stories, request.story)
 	}
 	return stories, nil
 }
