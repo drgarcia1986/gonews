@@ -47,7 +47,7 @@ func cursorUp(g *gocui.Gui, v *gocui.View) error {
 
 func helpMsg(g *gocui.Gui, v *gocui.View) error {
 	maxX, maxY := g.Size()
-	if v, err := g.SetView("help", maxX/2-30, maxY/2, maxX/2+15, maxY-1); err != nil {
+	if v, err := g.SetView("help", maxX/2-30, maxY/2, maxX/2+15, maxY/2+6); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
