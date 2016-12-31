@@ -21,6 +21,7 @@ var (
 		{quitKeys, "", quit},
 		{downKeys, "main", cursorDown},
 		{upKeys, "main", cursorUp},
+		{[]interface{}{'?'}, "main", helpMsg},
 	}
 )
 
@@ -49,7 +50,7 @@ func (gui *Gui) layout(g *gocui.Gui) error {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
-		v.Title = "Go - Hacker News"
+		v.Title = "Go - Hacker News ('?' for help)"
 		v.Highlight = true
 		v.SelBgColor = gocui.ColorGreen
 		v.SelFgColor = gocui.ColorBlack
@@ -77,6 +78,7 @@ func (gui *Gui) keybindings(g *gocui.Gui) error {
 	if err := g.SetKeybinding("main", gocui.KeyEnter, gocui.ModNone, gui.getLine); err != nil {
 		return err
 	}
+
 	return nil
 }
 
