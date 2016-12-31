@@ -1,14 +1,14 @@
 # Gonews
 [![Build Status](https://travis-ci.org/drgarcia1986/gonews.svg)](https://travis-ci.org/drgarcia1986/gonews)
 
-A Golang CLI to browser news from [Hacker News](https://news.ycombinator.com/)
+A Golang CLI to browser news from [Hacker News](https://news.ycombinator.com/)  
 Also is a Golang implementation of the awesome [pynews-cli](https://github.com/mazulo/pynews_cli).
 
 ## Installing
-Clone this project and install via `go install`.
+Get this project and install via `go install`.
 ```
-$ git clone git@github.com:drgarcia1986/gonews
-$ cd gonews
+$ go get github.com/drgarcia1986/gonews
+$ cd $GOPATH/src/github.com/drgarcia1986/gonews
 $ go install
 ```
 Or you can download a binary on releases.
