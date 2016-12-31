@@ -8,6 +8,22 @@ import (
 	"github.com/jroimartin/gocui"
 )
 
+var (
+	downKeys = []interface{}{'j', gocui.KeyArrowDown}
+	upKeys   = []interface{}{'k', gocui.KeyArrowUp}
+	quitKeys = []interface{}{'q', gocui.KeyCtrlC}
+
+	keybindingMap = []struct {
+		keys     []interface{}
+		viewName string
+		event    func(*gocui.Gui, *gocui.View) error
+	}{
+		{quitKeys, "", quit},
+		{downKeys, "main", cursorDown},
+		{upKeys, "main", cursorUp},
+	}
+)
+
 type Gui struct {
 	items []*hackernews.Story
 }
@@ -50,15 +66,14 @@ func (gui *Gui) layout(g *gocui.Gui) error {
 }
 
 func (gui *Gui) keybindings(g *gocui.Gui) error {
-	if err := g.SetKeybinding("", gocui.KeyCtrlC, gocui.ModNone, quit); err != nil {
-		return err
+	for _, bm := range keybindingMap {
+		for _, key := range bm.keys {
+			if err := g.SetKeybinding(bm.viewName, key, gocui.ModNone, bm.event); err != nil {
+				return err
+			}
+		}
 	}
-	if err := g.SetKeybinding("main", gocui.KeyArrowDown, gocui.ModNone, cursorDown); err != nil {
-		return err
-	}
-	if err := g.SetKeybinding("main", gocui.KeyArrowUp, gocui.ModNone, cursorUp); err != nil {
-		return err
-	}
+
 	if err := g.SetKeybinding("main", gocui.KeyEnter, gocui.ModNone, gui.getLine); err != nil {
 		return err
 	}
