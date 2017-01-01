@@ -5,11 +5,9 @@ A Golang CLI to browser news from [Hacker News](https://news.ycombinator.com/)
 Also is a Golang implementation of the awesome [pynews-cli](https://github.com/mazulo/pynews_cli).
 
 ## Installing
-Get this project and install via `go install`.
+Get this project and install via `go get -u`.
 ```
-$ go get github.com/drgarcia1986/gonews
-$ cd $GOPATH/src/github.com/drgarcia1986/gonews
-$ go install
+$ go get -u github.com/drgarcia1986/gonews
 ```
 Or you can download a binary on releases.
 
