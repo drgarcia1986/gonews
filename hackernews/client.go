@@ -84,7 +84,7 @@ func getURL(storyType int) string {
 	}
 }
 
-func storiesGenerator(targetIds []int) chan chan *storyRequest {
+func storiesGenerator(targetIds []int) <-chan chan *storyRequest {
 	generator := make(chan chan *storyRequest, len(targetIds))
 
 	go func() {
