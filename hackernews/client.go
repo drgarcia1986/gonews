@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+
+	pb "gopkg.in/cheggaaa/pb.v1"
 )
 
 type Client struct{}
@@ -114,13 +116,16 @@ func (c *Client) GetStories(storyType, limit int) ([]*Story, error) {
 	}
 	targetIds := ids[:limit]
 
+	bar := pb.StartNew(len(targetIds))
 	for future := range storiesGenerator(targetIds) {
 		request := <-future
 		if request.err != nil {
 			return nil, err
 		}
 		stories = append(stories, request.story)
+		bar.Increment()
 	}
+	bar.Finish()
 	return stories, nil
 }
 
