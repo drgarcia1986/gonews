@@ -7,6 +7,7 @@ import (
 
 	"github.com/drgarcia1986/gonews/client"
 	"github.com/drgarcia1986/gonews/gui"
+	"github.com/drgarcia1986/gonews/providers"
 	"github.com/drgarcia1986/gonews/providers/hackernews"
 	"github.com/drgarcia1986/gonews/story"
 )
@@ -14,9 +15,10 @@ import (
 const version = "0.0.1"
 
 var (
-	limit         int
-	storyType     int
-	flagStoryType string
+	limit            int
+	storyType        int
+	flagStoryType    string
+	flagProviderType string = "hn"
 )
 
 func init() {
@@ -37,10 +39,14 @@ func init() {
 	}
 }
 
+func getProvider(providerType string) providers.Provider {
+	return hackernews.New()
+}
+
 func main() {
 	fmt.Println("Getting HackerNews stories")
 
-	p := hackernews.New()
+	p := getProvider(flagProviderType)
 	c := client.NewWithPB(p)
 	stories, err := c.GetStories(storyType, limit)
 	if err != nil {
