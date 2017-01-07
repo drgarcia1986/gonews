@@ -38,7 +38,7 @@ func init() {
 func main() {
 	fmt.Println("Getting HackerNews stories")
 
-	hn := hackernews.New()
+	hn := hackernews.NewWithPB()
 	stories, err := hn.GetStories(storyType, limit)
 	if err != nil {
 		panic(err)

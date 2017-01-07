@@ -9,7 +9,10 @@ import (
 	pb "gopkg.in/cheggaaa/pb.v1"
 )
 
-type Client struct{}
+type Client struct {
+	withPB bool
+	pb     *pb.ProgressBar
+}
 type Story struct {
 	Title string `json:"title"`
 	URL   string `json:"url"`
@@ -116,19 +119,41 @@ func (c *Client) GetStories(storyType, limit int) ([]*Story, error) {
 	}
 	targetIds := ids[:limit]
 
-	bar := pb.StartNew(len(targetIds))
+	c.startProgressBar(len(targetIds))
 	for future := range storiesGenerator(targetIds) {
 		request := <-future
 		if request.err != nil {
 			return nil, err
 		}
 		stories = append(stories, request.story)
-		bar.Increment()
+		c.incrementProgressBar()
 	}
-	bar.Finish()
+	c.finishProgressBar()
 	return stories, nil
+}
+
+func (c *Client) startProgressBar(count int) {
+	if c.withPB {
+		c.pb = pb.StartNew(count)
+	}
+}
+
+func (c *Client) incrementProgressBar() {
+	if c.pb != nil {
+		c.pb.Increment()
+	}
+}
+
+func (c *Client) finishProgressBar() {
+	if c.pb != nil {
+		c.pb.Finish()
+	}
 }
 
 func New() *Client {
 	return &Client{}
+}
+
+func NewWithPB() *Client {
+	return &Client{withPB: true}
 }
