@@ -3,7 +3,7 @@ package gui
 import (
 	"fmt"
 
-	"github.com/drgarcia1986/gonews/hackernews"
+	"github.com/drgarcia1986/gonews/story"
 	"github.com/drgarcia1986/gonews/utils"
 	"github.com/jroimartin/gocui"
 )
@@ -26,7 +26,7 @@ var (
 )
 
 type Gui struct {
-	items []*hackernews.Story
+	items []*story.Story
 }
 
 func (gui *Gui) getLine(g *gocui.Gui, v *gocui.View) error {
@@ -101,8 +101,8 @@ func (gui *Gui) Run() error {
 	return nil
 }
 
-func New(items []*hackernews.Story) *Gui {
-	guiItems := make([]*hackernews.Story, len(items))
+func New(items []*story.Story) *Gui {
+	guiItems := make([]*story.Story, len(items))
 	copy(guiItems, items)
 	return &Gui{items: guiItems}
 }

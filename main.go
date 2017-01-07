@@ -5,8 +5,10 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/drgarcia1986/gonews/client"
 	"github.com/drgarcia1986/gonews/gui"
-	"github.com/drgarcia1986/gonews/hackernews"
+	"github.com/drgarcia1986/gonews/providers/hackernews"
+	"github.com/drgarcia1986/gonews/story"
 )
 
 const version = "0.0.1"
@@ -29,17 +31,18 @@ func init() {
 	}
 
 	if flagStoryType == "new" {
-		storyType = hackernews.NewStories
+		storyType = story.NewStories
 	} else {
-		storyType = hackernews.TopStories
+		storyType = story.TopStories
 	}
 }
 
 func main() {
 	fmt.Println("Getting HackerNews stories")
 
-	hn := hackernews.NewWithPB()
-	stories, err := hn.GetStories(storyType, limit)
+	p := hackernews.New()
+	c := client.NewWithPB(p)
+	stories, err := c.GetStories(storyType, limit)
 	if err != nil {
 		panic(err)
 	}
