@@ -26,7 +26,8 @@ var (
 )
 
 type Gui struct {
-	items []*story.Story
+	items        []*story.Story
+	providerName string
 }
 
 func (gui *Gui) getLine(g *gocui.Gui, v *gocui.View) error {
@@ -50,7 +51,7 @@ func (gui *Gui) layout(g *gocui.Gui) error {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
-		v.Title = "Go - Hacker News ('?' for help)"
+		v.Title = fmt.Sprintf("GoNews - %s ('?' for help)", gui.providerName)
 		v.Highlight = true
 		v.SelBgColor = gocui.ColorGreen
 		v.SelFgColor = gocui.ColorBlack
@@ -101,8 +102,8 @@ func (gui *Gui) Run() error {
 	return nil
 }
 
-func New(items []*story.Story) *Gui {
+func New(items []*story.Story, providerName string) *Gui {
 	guiItems := make([]*story.Story, len(items))
 	copy(guiItems, items)
-	return &Gui{items: guiItems}
+	return &Gui{items: guiItems, providerName: providerName}
 }

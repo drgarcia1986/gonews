@@ -74,7 +74,7 @@ func main() {
 		panic(err)
 	}
 
-	g := gui.New(stories)
+	g := gui.New(stories, p.Name())
 	if err = g.Run(); err != nil {
 		panic(err)
 	}
