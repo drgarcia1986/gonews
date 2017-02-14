@@ -6,6 +6,14 @@ import (
 	"github.com/drgarcia1986/gonews/story"
 )
 
+func TestFakeName(t *testing.T) {
+	fake := &Fake{[]*story.Story{}}
+	expected := "fake"
+	if name := fake.Name(); name != expected {
+		t.Errorf("Expected %s, got %s", expected, name)
+	}
+}
+
 func TestFakeGetStories(t *testing.T) {
 	stories := []*story.Story{
 		&story.Story{"Foo", "http://golang.org"},
