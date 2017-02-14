@@ -5,6 +5,8 @@ import (
 	"runtime"
 )
 
+const Version = "0.0.1"
+
 func OpenURL(url string) error {
 	var cmd string
 	switch runtime.GOOS {

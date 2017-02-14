@@ -10,9 +10,8 @@ import (
 	"github.com/drgarcia1986/gonews/providers"
 	"github.com/drgarcia1986/gonews/providers/hackernews"
 	"github.com/drgarcia1986/gonews/story"
+	"github.com/drgarcia1986/gonews/utils"
 )
-
-const version = "0.0.1"
 
 var (
 	limit            int
@@ -28,7 +27,7 @@ func init() {
 	flag.Parse()
 
 	if len(flag.Args()) > 0 && flag.Args()[0] == "version" {
-		fmt.Printf("GoNews %s\n", version)
+		fmt.Printf("GoNews %s\n", utils.Version)
 		os.Exit(0)
 	}
 
