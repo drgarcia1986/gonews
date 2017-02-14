@@ -78,18 +78,18 @@ func storiesGenerator(targetIds []int) <-chan chan *providers.StoryRequest {
 	generator := make(chan chan *providers.StoryRequest, len(targetIds))
 
 	go func() {
+		defer close(generator)
 		for _, id := range targetIds {
 			generator <- func(id int) chan *providers.StoryRequest {
 				future := make(chan *providers.StoryRequest, 1)
 				go func() {
+					defer close(future)
 					story, err := getStory(id)
 					future <- &providers.StoryRequest{story, err}
-					close(future)
 				}()
 				return future
 			}(id)
 		}
-		close(generator)
 	}()
 
 	return generator
@@ -104,6 +104,10 @@ func (h *HackerNews) GetStories(storyType, limit int) (<-chan chan *providers.St
 	targetIds := ids[:limit]
 
 	return storiesGenerator(targetIds), nil
+}
+
+func (h *HackerNews) Name() string {
+	return "HackerNews"
 }
 
 func New() providers.Provider {

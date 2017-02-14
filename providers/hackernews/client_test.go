@@ -9,6 +9,14 @@ import (
 	httpmock "gopkg.in/jarcoal/httpmock.v1"
 )
 
+func TestHackernewsName(t *testing.T) {
+	client := New()
+	expected := "HackerNews"
+	if name := client.Name(); name != expected {
+		t.Errorf("Expected %s, got %s", expected, name)
+	}
+}
+
 func TestHackernewsGetStoryUrl(t *testing.T) {
 	expectedURL := fmt.Sprintf("%s/1.json", urlStoryBase)
 
