@@ -1,0 +1,37 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"checksumSHA1": "MzsAuz46V8uY0nNlHIY0XgL/7ys=",
+			"path": "github.com/jroimartin/gocui",
+			"revision": "7ac95c981b8a07b624ab197b3ad5813fdfbe4864",
+			"revisionTime": "2016-11-24T21:23:44Z"
+		},
+		{
+			"checksumSHA1": "yf185lmVPcvXjLZuPT1s4JzxI18=",
+			"path": "github.com/mattn/go-runewidth",
+			"revision": "737072b4e32b7a5018b4a7125da8d12de90e8045",
+			"revisionTime": "2016-10-12T01:35:12Z"
+		},
+		{
+			"checksumSHA1": "pcxo5ATo/IV/Co8/F4RmBTL+mQs=",
+			"path": "github.com/nsf/termbox-go",
+			"revision": "abe82ce5fb7a42fbd6784a5ceb71aff977e09ed8",
+			"revisionTime": "2016-12-05T19:42:51Z"
+		},
+		{
+			"checksumSHA1": "mj71zOfqkkSk7YwAQHY1AiiEUmU=",
+			"path": "gopkg.in/cheggaaa/pb.v1",
+			"revision": "d7e6ca3010b6f084d8056847f55d7f572f180678",
+			"revisionTime": "2016-11-21T09:29:06Z"
+		},
+		{
+			"checksumSHA1": "wCthC0ie5ztHqim0dP2ZE13HXcw=",
+			"path": "gopkg.in/jarcoal/httpmock.v1",
+			"revision": "6aa33143427f6eb0bebcc0af42e8db85e39a42c0",
+			"revisionTime": "2016-12-11T10:50:48Z"
+		}
+	],
+	"rootPath": "github.com/drgarcia1986/gonews"
+}
