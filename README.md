@@ -1,7 +1,7 @@
 # Gonews
 [![Build Status](https://travis-ci.org/drgarcia1986/gonews.svg)](https://travis-ci.org/drgarcia1986/gonews)
 
-A Golang CLI to browser news from [Hacker News](https://news.ycombinator.com/)  
+A Golang CLI to browser news from [Hacker News](https://news.ycombinator.com/) and [Reddit](https://www.reddit.com)  
 Also is a Golang implementation of the awesome [pynews-cli](https://github.com/mazulo/pynews_cli).
 
 ## Installing
@@ -19,12 +19,17 @@ with parameter `--type`.
 ```
 $ gonews --limit 20 --type top
 ```
+By default gonews use `hackernews` as provider, but you can change the provider with parameter `--provider`, e.g:
+```
+$ gonews --provider reddit-golang --type new --limit 10
+```
 For more information about usage, use command `gonews --help`
 ```
 $ gonews --help
-Usage of gonews:
   -limit int
         Number of Stories to get (default 10)
+  -provider string
+        Stories Provider (hackernews, reddit, reddit-<subreddit>) (default "hackernews")
   -type string
         Stories Type ('new' or 'top') (default "top")
 ```
