@@ -8,5 +8,6 @@ type StoryRequest struct {
 }
 
 type Provider interface {
+	Name() string
 	GetStories(int, int) (<-chan chan *StoryRequest, error)
 }
