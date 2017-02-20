@@ -11,9 +11,8 @@ import (
 	"github.com/drgarcia1986/gonews/utils"
 )
 
-const urlBase = "https://www.reddit.com/"
-
 var (
+	urlBase            = "https://www.reddit.com"
 	sufixUrlTopStories = "top.json"
 	sufixUrlNewStories = "new.json"
 )

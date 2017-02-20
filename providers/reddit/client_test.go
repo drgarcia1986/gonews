@@ -3,9 +3,8 @@ package reddit
 import (
 	"fmt"
 	"net/http"
+	"net/http/httptest"
 	"testing"
-
-	httpmock "gopkg.in/jarcoal/httpmock.v1"
 
 	"github.com/drgarcia1986/gonews/story"
 	"github.com/drgarcia1986/gonews/utils"
@@ -52,21 +51,14 @@ func TestGetURL(t *testing.T) {
 }
 
 func TestMakeRequestWithUserAgentHeader(t *testing.T) {
-	httpmock.Activate()
-	defer httpmock.DeactivateAndReset()
-
 	var userAgent string
-	url := "http://foo.com/bar"
-	httpmock.RegisterResponder("GET", url,
-		func(req *http.Request) (*http.Response, error) {
-			userAgent = req.Header.Get("User-Agent")
-			return httpmock.NewStringResponse(201, ""), nil
-		},
-	)
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		userAgent = r.Header.Get("User-Agent")
+	}))
+	defer ts.Close()
+
 	expectedUserAgent := fmt.Sprintf("gonews:v%s (by /u/drgarcia1986)", utils.Version)
-
-	makeRequest(url)
-
+	makeRequest(ts.URL)
 	if userAgent != expectedUserAgent {
 		t.Errorf("Expected %s, got %s", expectedUserAgent, userAgent)
 	}
@@ -74,25 +66,21 @@ func TestMakeRequestWithUserAgentHeader(t *testing.T) {
 }
 
 func TestGetStories(t *testing.T) {
-	httpmock.Activate()
-	defer httpmock.DeactivateAndReset()
-
-	url := "http://foo.com/bar"
-
 	expectedTitle := "test"
 	expectedURL := "http://test.com"
 
-	httpmock.RegisterResponder("GET", url,
-		httpmock.NewStringResponder(200,
-			`{"data": {"children": [
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintf(w, `
+			{"data": {"children": [
 				{"data": {
-					"title": "test",
-					"url": "http://test.com"
+					"title": "%s",
+					"url": "%s"
 				}}
-			]}}`),
-	)
+			]}}`, expectedTitle, expectedURL)
+	}))
+	defer ts.Close()
 
-	stories, err := getStories(url)
+	stories, err := getStories(ts.URL)
 	if err != nil {
 		t.Errorf("Error on get stories %v", err)
 	}
@@ -111,25 +99,24 @@ func TestGetStories(t *testing.T) {
 }
 
 func TestGetStoriesGenerator(t *testing.T) {
-	client := New()
-	url := getURL(story.TopStories, 2, "")
-
-	httpmock.Activate()
-	defer httpmock.DeactivateAndReset()
-
-	httpmock.RegisterResponder("GET", url,
-		httpmock.NewStringResponder(200,
-			`{"data": {"children": [
+	expectedTitles := []string{"test", "test 2"}
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintf(w, `
+			{"data": {"children": [
 				{"data": {
-					"title": "test",
+					"title": "%s",
 					"url": "http://test.com"
 				}},
 				{"data": {
-					"title": "test 2",
+					"title": "%s",
 					"url": "http://test2.com"
 				}}
-			]}}`),
-	)
+			]}}`, expectedTitles[0], expectedTitles[1])
+	}))
+	defer ts.Close()
+
+	urlBase = ts.URL
+	client := New()
 
 	generator, err := client.GetStories(story.TopStories, 2)
 	if err != nil {
@@ -137,7 +124,6 @@ func TestGetStoriesGenerator(t *testing.T) {
 	}
 
 	i := 0
-	expectedTitles := []string{"test", "test 2"}
 	for future := range generator {
 		r := <-future
 
