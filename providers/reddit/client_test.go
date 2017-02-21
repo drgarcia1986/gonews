@@ -99,7 +99,7 @@ func TestGetStories(t *testing.T) {
 }
 
 func TestGetStoriesGenerator(t *testing.T) {
-	expectedTitles := []string{"test", "test 2"}
+	expectedTitles := []interface{}{"test", "test 2"}
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, `
 			{"data": {"children": [
@@ -111,7 +111,7 @@ func TestGetStoriesGenerator(t *testing.T) {
 					"title": "%s",
 					"url": "http://test2.com"
 				}}
-			]}}`, expectedTitles[0], expectedTitles[1])
+			]}}`, expectedTitles...)
 	}))
 	defer ts.Close()
 

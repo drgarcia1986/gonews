@@ -36,9 +36,9 @@ func TestHackernewsGetStoryUrl(t *testing.T) {
 }
 
 func TestGetStoryIds(t *testing.T) {
-	expectedIds := []int{1111, 2222, 3333}
+	expectedIds := []interface{}{1111, 2222, 3333}
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "[%d, %d, %d]", expectedIds[0], expectedIds[1], expectedIds[2])
+		fmt.Fprintf(w, "[%d, %d, %d]", expectedIds...)
 	}))
 	defer ts.Close()
 
