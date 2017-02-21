@@ -10,9 +10,8 @@ import (
 	"github.com/drgarcia1986/gonews/story"
 )
 
-const urlBase = "https://hacker-news.firebaseio.com/v0"
-
 var (
+	urlBase       = "https://hacker-news.firebaseio.com/v0"
 	urlTopStories = fmt.Sprintf("%s/topstories.json", urlBase)
 	urlNewStories = fmt.Sprintf("%s/newstories.json", urlBase)
 	urlStoryBase  = fmt.Sprintf("%s/item", urlBase)
