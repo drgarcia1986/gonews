@@ -25,12 +25,6 @@
 			"path": "gopkg.in/cheggaaa/pb.v1",
 			"revision": "d7e6ca3010b6f084d8056847f55d7f572f180678",
 			"revisionTime": "2016-11-21T09:29:06Z"
-		},
-		{
-			"checksumSHA1": "wCthC0ie5ztHqim0dP2ZE13HXcw=",
-			"path": "gopkg.in/jarcoal/httpmock.v1",
-			"revision": "6aa33143427f6eb0bebcc0af42e8db85e39a42c0",
-			"revisionTime": "2016-12-11T10:50:48Z"
 		}
 	],
 	"rootPath": "github.com/drgarcia1986/gonews"
