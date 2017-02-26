@@ -90,7 +90,6 @@ func (gui *Gui) Run() error {
 	}
 	defer g.Close()
 
-	g.Cursor = true
 	g.SetManagerFunc(gui.layout)
 	if err := gui.keybindings(g); err != nil {
 		return err
