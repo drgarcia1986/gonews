@@ -9,8 +9,8 @@ import (
 
 func TestGetStories(t *testing.T) {
 	expectedStories := []*story.Story{
-		&story.Story{"Foo", "http://golang.org"},
-		&story.Story{"Bar", "http://google.com"},
+		{"Foo", "http://golang.org"},
+		{"Bar", "http://google.com"},
 	}
 
 	fake := &providers.Fake{expectedStories}
