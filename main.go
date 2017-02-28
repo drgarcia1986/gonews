@@ -56,8 +56,6 @@ func getProvider(providerType string) providers.Provider {
 		}
 		return reddit.NewSubReddit(providerArgs[1])
 	}
-
-	return nil
 }
 
 func main() {
