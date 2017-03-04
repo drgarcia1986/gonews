@@ -7,7 +7,7 @@ import (
 )
 
 func TestFakeName(t *testing.T) {
-	fake := &Fake{[]*story.Story{}}
+	fake := NewFake()
 	expected := "fake"
 	if name := fake.Name(); name != expected {
 		t.Errorf("Expected %s, got %s", expected, name)
