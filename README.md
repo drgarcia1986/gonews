@@ -1,6 +1,7 @@
 # Gonews
 [![Build Status](https://travis-ci.org/drgarcia1986/gonews.svg)](https://travis-ci.org/drgarcia1986/gonews)
 [![Go Report Card](https://goreportcard.com/badge/drgarcia1986/gonews)](https://goreportcard.com/report/drgarcia1986/gonews)
+[![codecov](https://codecov.io/gh/drgarcia1986/gonews/branch/master/graph/badge.svg)](https://codecov.io/gh/drgarcia1986/gonews)
 
 A Golang CLI to browser news from [Hacker News](https://news.ycombinator.com/) and [Reddit](https://www.reddit.com)  
 Also is a Golang implementation of the awesome [pynews-cli](https://github.com/mazulo/pynews_cli).
