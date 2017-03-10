@@ -19,8 +19,8 @@ var (
 		event    func(*gocui.Gui, *gocui.View) error
 	}{
 		{quitKeys, "", quit},
-		{downKeys, "main", cursorDown},
-		{upKeys, "main", cursorUp},
+		{downKeys, "", cursorDown},
+		{upKeys, "", cursorUp},
 		{[]interface{}{'?'}, "main", helpMsg},
 	}
 )
@@ -31,18 +31,51 @@ type Gui struct {
 }
 
 func (gui *Gui) getLine(g *gocui.Gui, v *gocui.View) error {
-	_, cy := v.Cursor()
-	line, err := v.Line(cy)
+	s, err := gui.getStoryOfCurrentLine(v)
 	if err != nil {
+		return err
+	}
+
+	if s != nil {
+		return utils.OpenURL(s.URL)
+	}
+	return nil
+}
+
+func (gui *Gui) preview(g *gocui.Gui, v *gocui.View) error {
+	s, err := gui.getStoryOfCurrentLine(v)
+	if err != nil {
+		return err
+	}
+
+	if s == nil {
 		return nil
 	}
 
-	for _, story := range gui.items {
-		if story.Title == line {
-			return utils.OpenURL(story.URL)
+	p, err := utils.GetPreview(s.URL)
+	if err != nil {
+		return err
+	}
+
+	if p == "" {
+		p = "No preview available"
+	}
+	return showPreview(g, s.Title, p)
+}
+
+func (gui *Gui) getStoryOfCurrentLine(v *gocui.View) (*story.Story, error) {
+	_, cy := v.Cursor()
+	line, err := v.Line(cy)
+	if err != nil {
+		return nil, err
+	}
+
+	for _, s := range gui.items {
+		if s.Title == line {
+			return s, nil
 		}
 	}
-	return nil
+	return nil, nil
 }
 
 func (gui *Gui) layout(g *gocui.Gui) error {
@@ -77,6 +110,10 @@ func (gui *Gui) keybindings(g *gocui.Gui) error {
 	}
 
 	if err := g.SetKeybinding("main", gocui.KeyEnter, gocui.ModNone, gui.getLine); err != nil {
+		return err
+	}
+
+	if err := g.SetKeybinding("main", 'p', gocui.ModNone, gui.preview); err != nil {
 		return err
 	}
 

@@ -2,13 +2,15 @@ package gui
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/jroimartin/gocui"
 )
 
 func quit(g *gocui.Gui, v *gocui.View) error {
-	if v.Name() == "help" {
-		return closeHelpMsg(g, v)
+	if name := v.Name(); name != "main" {
+		g.Cursor = false
+		return deleteView(name, g)
 	}
 	return gocui.ErrQuit
 }
@@ -49,7 +51,7 @@ func cursorUp(g *gocui.Gui, v *gocui.View) error {
 	return nil
 }
 
-func helpMsg(g *gocui.Gui, v *gocui.View) error {
+func helpMsg(g *gocui.Gui, _ *gocui.View) error {
 	maxX, maxY := g.Size()
 	if v, err := g.SetView("help", maxX/2-30, maxY/2, maxX/2+15, maxY/2+6); err != nil {
 		if err != gocui.ErrUnknownView {
@@ -58,6 +60,7 @@ func helpMsg(g *gocui.Gui, v *gocui.View) error {
 		v.Title = "Keyboard Shortcuts"
 		fmt.Fprintln(v, `
 		- Enter : Open story in default browser
+		- p : Preview (beta)
 		- k / Arrow Up : Move up
 		- j / Arrow Down : Move down
 		- q / Ctrl+c : Close window
@@ -71,12 +74,48 @@ func helpMsg(g *gocui.Gui, v *gocui.View) error {
 	return nil
 }
 
-func closeHelpMsg(g *gocui.Gui, v *gocui.View) error {
-	if err := g.DeleteView("help"); err != nil {
+func deleteView(viewName string, g *gocui.Gui) error {
+	if err := g.DeleteView(viewName); err != nil {
 		return err
 	}
 	if _, err := g.SetCurrentView("main"); err != nil {
 		return err
+	}
+	return nil
+}
+
+func showPreview(g *gocui.Gui, title, p string) error {
+	maxX, maxY := g.Size()
+	if v, err := g.SetView("preview", 0, 0, maxX-1, maxY-1); err != nil {
+		if err != gocui.ErrUnknownView {
+			return err
+		}
+		v.Title = fmt.Sprint("Preview - ", title)
+		g.Cursor = true
+
+		var lenght int
+		for _, s := range strings.Split(p, "\n") {
+			for {
+				lenght = maxX - 2
+				if lenght > len(s) {
+					lenght = len(s)
+				}
+
+				text := strings.TrimSpace(s[:lenght])
+				if text != "" {
+					fmt.Fprintln(v, text)
+				}
+
+				if lenght == len(s) {
+					break
+				}
+				s = s[lenght:]
+			}
+		}
+
+		if _, err := g.SetCurrentView("preview"); err != nil {
+			return err
+		}
 	}
 	return nil
 }
