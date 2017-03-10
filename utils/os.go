@@ -5,11 +5,14 @@ import (
 	"runtime"
 )
 
-var execCommand = exec.Command
+var (
+	execCommand = exec.Command
+	runtimeOS   = runtime.GOOS
+)
 
 func OpenURL(url string) error {
 	var cmd string
-	switch runtime.GOOS {
+	switch runtimeOS {
 	case "darwin":
 		cmd = "open"
 	default:
