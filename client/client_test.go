@@ -3,6 +3,7 @@ package client
 import (
 	"testing"
 
+	"github.com/drgarcia1986/gonews/progressbar"
 	"github.com/drgarcia1986/gonews/providers"
 	"github.com/drgarcia1986/gonews/story"
 )
@@ -14,7 +15,7 @@ func TestGetStories(t *testing.T) {
 	}
 
 	fake := &providers.Fake{expectedStories}
-	c := New(fake)
+	c := New(fake, progressbar.New())
 
 	stories, err := c.GetStories(1, 1)
 	if err != nil {

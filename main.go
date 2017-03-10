@@ -8,6 +8,7 @@ import (
 
 	"github.com/drgarcia1986/gonews/client"
 	"github.com/drgarcia1986/gonews/gui"
+	"github.com/drgarcia1986/gonews/progressbar"
 	"github.com/drgarcia1986/gonews/providers"
 	"github.com/drgarcia1986/gonews/providers/hackernews"
 	"github.com/drgarcia1986/gonews/providers/reddit"
@@ -66,7 +67,7 @@ func main() {
 	}
 
 	fmt.Printf("Getting %s stories\n", p.Name())
-	c := client.NewWithPB(p)
+	c := client.New(p, progressbar.New())
 	stories, err := c.GetStories(storyType, limit)
 	if err != nil {
 		panic(err)

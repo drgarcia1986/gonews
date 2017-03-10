@@ -21,10 +21,15 @@ func TestFakeIncrement(t *testing.T) {
 }
 
 func TestFakeFinish(t *testing.T) {
-	p := new(FakeProgressBar)
+	p := NewFake()
 	p.Finish()
 
-	if !p.finished {
+	f, ok := p.(*FakeProgressBar)
+	if !ok {
+		t.Fatal("error in type assertation of progress interface")
+	}
+
+	if !f.finished {
 		t.Error("expected progressbar finished")
 	}
 }
