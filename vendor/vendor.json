@@ -3,6 +3,18 @@
 	"ignore": "test",
 	"package": [
 		{
+			"checksumSHA1": "bOODD4Gbw3GfcuQPU2dI40crxxk=",
+			"path": "github.com/PuerkitoBio/goquery",
+			"revision": "c641b87978a16588afa9ab1a02e02c8b8e05b314",
+			"revisionTime": "2017-03-08T19:48:52Z"
+		},
+		{
+			"checksumSHA1": "2rWSos1D+xqNSGkvEMOG3pntod8=",
+			"path": "github.com/andybalholm/cascadia",
+			"revision": "349dd0209470eabd9514242c688c403c0926d266",
+			"revisionTime": "2016-12-24T14:14:13Z"
+		},
+		{
 			"checksumSHA1": "MzsAuz46V8uY0nNlHIY0XgL/7ys=",
 			"path": "github.com/jroimartin/gocui",
 			"revision": "7ac95c981b8a07b624ab197b3ad5813fdfbe4864",
@@ -15,10 +27,28 @@
 			"revisionTime": "2016-10-12T01:35:12Z"
 		},
 		{
+			"checksumSHA1": "403/aj8ClsMSvpwL753atQuOIeU=",
+			"path": "github.com/mauidude/go-readability",
+			"revision": "2f30b1a346f19ddab94ffe0cb788331be9399de2",
+			"revisionTime": "2014-12-16T01:23:17Z"
+		},
+		{
 			"checksumSHA1": "pcxo5ATo/IV/Co8/F4RmBTL+mQs=",
 			"path": "github.com/nsf/termbox-go",
 			"revision": "abe82ce5fb7a42fbd6784a5ceb71aff977e09ed8",
 			"revisionTime": "2016-12-05T19:42:51Z"
+		},
+		{
+			"checksumSHA1": "vqc3a+oTUGX8PmD0TS+qQ7gmN8I=",
+			"path": "golang.org/x/net/html",
+			"revision": "45e771701b814666a7eb299e6c7a57d0b1799e91",
+			"revisionTime": "2016-12-15T19:42:18Z"
+		},
+		{
+			"checksumSHA1": "00eQaGynDYrv3tL+C7l9xH0IDZg=",
+			"path": "golang.org/x/net/html/atom",
+			"revision": "45e771701b814666a7eb299e6c7a57d0b1799e91",
+			"revisionTime": "2016-12-15T19:42:18Z"
 		},
 		{
 			"checksumSHA1": "mj71zOfqkkSk7YwAQHY1AiiEUmU=",

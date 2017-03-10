@@ -19,5 +19,4 @@ func TestMakeRequestWithUserAgentHeader(t *testing.T) {
 	if userAgent != expectedUserAgent {
 		t.Errorf("Expected %s, got %s", expectedUserAgent, userAgent)
 	}
-
 }
