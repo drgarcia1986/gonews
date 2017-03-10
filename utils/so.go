@@ -5,7 +5,7 @@ import (
 	"runtime"
 )
 
-const Version = "0.1.1"
+var execCommand = exec.Command
 
 func OpenURL(url string) error {
 	var cmd string
@@ -15,5 +15,5 @@ func OpenURL(url string) error {
 	default:
 		cmd = "xdg-open"
 	}
-	return exec.Command(cmd, url).Start()
+	return execCommand(cmd, url).Start()
 }
