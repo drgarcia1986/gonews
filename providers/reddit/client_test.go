@@ -7,7 +7,6 @@ import (
 	"testing"
 
 	"github.com/drgarcia1986/gonews/story"
-	"github.com/drgarcia1986/gonews/utils"
 )
 
 func TestName(t *testing.T) {
@@ -48,21 +47,6 @@ func TestGetURL(t *testing.T) {
 			)
 		}
 	}
-}
-
-func TestMakeRequestWithUserAgentHeader(t *testing.T) {
-	var userAgent string
-	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		userAgent = r.Header.Get("User-Agent")
-	}))
-	defer ts.Close()
-
-	expectedUserAgent := fmt.Sprintf("gonews:v%s (by /u/drgarcia1986)", utils.Version)
-	makeRequest(ts.URL)
-	if userAgent != expectedUserAgent {
-		t.Errorf("Expected %s, got %s", expectedUserAgent, userAgent)
-	}
-
 }
 
 func TestGetStories(t *testing.T) {

@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"net/http"
 
 	"github.com/drgarcia1986/gonews/providers"
 	"github.com/drgarcia1986/gonews/story"
@@ -45,19 +44,8 @@ func getURL(storyType, limit int, subReddit string) string {
 	return fmt.Sprintf("%s?limit=%d", url, limit)
 }
 
-func makeRequest(url string) (*http.Response, error) {
-	client := new(http.Client)
-	req, err := http.NewRequest("GET", url, nil)
-	if err != nil {
-		return nil, err
-	}
-
-	req.Header.Set("User-Agent", fmt.Sprintf("gonews:v%s (by /u/drgarcia1986)", utils.Version))
-	return client.Do(req)
-}
-
 func getStories(url string) ([]*story.Story, error) {
-	resp, err := makeRequest(url)
+	resp, err := utils.MakeRequest("GET", url, nil)
 	if err != nil {
 		return nil, err
 	}
