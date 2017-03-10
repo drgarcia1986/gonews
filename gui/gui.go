@@ -30,16 +30,12 @@ type Gui struct {
 	providerName string
 }
 
-func (gui *Gui) getLine(g *gocui.Gui, v *gocui.View) error {
+func (gui *Gui) openStory(g *gocui.Gui, v *gocui.View) error {
 	s, err := gui.getStoryOfCurrentLine(v)
-	if err != nil {
-		return err
-	}
-
-	if s != nil {
+	if err == nil && s != nil {
 		return utils.OpenURL(s.URL)
 	}
-	return nil
+	return err
 }
 
 func (gui *Gui) preview(g *gocui.Gui, v *gocui.View) error {
@@ -52,15 +48,15 @@ func (gui *Gui) preview(g *gocui.Gui, v *gocui.View) error {
 		return nil
 	}
 
-	p, err := utils.GetPreview(s.URL)
+	content, err := utils.GetPreview(s.URL)
 	if err != nil {
 		return err
 	}
 
-	if p == "" {
-		p = "No preview available"
+	if content == "" {
+		content = "No preview available"
 	}
-	return showPreview(g, s.Title, p)
+	return showPreview(g, s.Title, content)
 }
 
 func (gui *Gui) getStoryOfCurrentLine(v *gocui.View) (*story.Story, error) {
@@ -109,7 +105,7 @@ func (gui *Gui) keybindings(g *gocui.Gui) error {
 		}
 	}
 
-	if err := g.SetKeybinding("main", gocui.KeyEnter, gocui.ModNone, gui.getLine); err != nil {
+	if err := g.SetKeybinding("main", gocui.KeyEnter, gocui.ModNone, gui.openStory); err != nil {
 		return err
 	}
 

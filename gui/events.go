@@ -84,7 +84,7 @@ func deleteView(viewName string, g *gocui.Gui) error {
 	return nil
 }
 
-func showPreview(g *gocui.Gui, title, p string) error {
+func showPreview(g *gocui.Gui, title, content string) error {
 	maxX, maxY := g.Size()
 	if v, err := g.SetView("preview", 0, 0, maxX-1, maxY-1); err != nil {
 		if err != gocui.ErrUnknownView {
@@ -93,23 +93,23 @@ func showPreview(g *gocui.Gui, title, p string) error {
 		v.Title = fmt.Sprint("Preview - ", title)
 		g.Cursor = true
 
-		var lenght int
-		for _, s := range strings.Split(p, "\n") {
+		var length int
+		for _, s := range strings.Split(content, "\n") {
 			for {
-				lenght = maxX - 2
-				if lenght > len(s) {
-					lenght = len(s)
+				length = maxX - 2
+				if length > len(s) {
+					length = len(s)
 				}
 
-				text := strings.TrimSpace(s[:lenght])
+				text := strings.TrimSpace(s[:length])
 				if text != "" {
 					fmt.Fprintln(v, text)
 				}
 
-				if lenght == len(s) {
+				if length == len(s) {
 					break
 				}
-				s = s[lenght:]
+				s = s[length:]
 			}
 		}
 
